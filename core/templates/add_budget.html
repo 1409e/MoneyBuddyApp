@@ -1,0 +1,28 @@
+<form id="addBudgetForm">
+    <input type="number" id="total_income" placeholder="Total Income" />
+    <button type="submit">Add Budget</button>
+  </form>
+  
+  <script>
+  document.getElementById("addBudgetForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var total_income = document.getElementById("total_income").value;
+      
+      fetch('/api/budget/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: JSON.stringify({ total_income: total_income })
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data);
+      })
+      .catch(error => {
+          console.error(error);
+      });
+  });
+  </script>
+  
